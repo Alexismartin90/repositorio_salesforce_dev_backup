@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Salesforce Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <style id="app-style">
+        html, body {
+    overflow-x: hidden;
+}
+        :root {
+            --primary-color: #1589EE;
+            --secondary-color: #0B5CAB;
+            --accent-color: #01A1E0;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F7FAFC;
+            --card-bg: #FFFFFF;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --navbar-bg: #FFFFFF;
+            --footer-bg: #F7FAFC;
+            --success-color: #48BB78;
+            --error-color: #F56565;
+            --loading-color: #4299E1;
+            --bg-modificado: #FFFFFF;
+            --text-cert: #333333;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #01A1E0;
+            --secondary-color: #1589EE;
+            --accent-color: #0B5CAB;
+            --text-primary: #F7FAFC;
+            --text-secondary: #CBD5E0;
+            --bg-primary: #1A202C;
+            --bg-secondary: #2D3748;
+            --card-bg: #2D3748;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --navbar-bg: #1A202C;
+            --footer-bg: #2D3748;
+            --success-color: #68D391;
+            --error-color: #FC8181;
+            --loading-color: #63B3ED;
+            --bg-modificado: #D1D5DB;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            background-color: var(--navbar-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            min-height: calc(100dvh - 4rem);
+            background-color: var(--bg-primary);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            padding: 5rem 1rem;
+            scroll-margin-top: 5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-badge {
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            margin: 0.25rem;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .footer {
+            background-color: var(--footer-bg);
+            padding: 2rem 0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.toggle-slider {
+            background-color: var(--primary-color);
+        }
+
+        input:focus+.toggle-slider {
+            box-shadow: 0 0 1px var(--primary-color);
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .project-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card .card-body {
+            flex: 1;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            left: 0;
+        }
+
+        #contactForm .form-control {
+            border: 1px solid var(--text-secondary);
+            color: #333333;
+        }
+
+        #contactForm .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(21, 137, 238, 0.25);
+        }
+
+        .modificado-item{
+            background-color: var(--bg-modificado);
+        }
+
+        .text-cert{
+            color: var(--text-cert);
+        }
+
+
+        @media (max-width: 768px) {
+            .navbar-collapse {
+                box-sizing: border-box;
+                background-color: var(--navbar-bg);
+                padding: 1rem;
+                border-radius: 0 0 8px 8px;
+            }
+        }
+
+        .section-alt {
+    background-color: var(--bg-secondary);
+}
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg py-3 box-border">
+        <div class="container">
+            <a class="navbar-brand font-bold text-2xl" href="javascript:void(0)" data-i18n="nav.logo">Salesforce.Dev Portfolio</a>
+            <button class="navbar-toggler border-0 focus:outline-none lg:hidden" type="button" id="navbarToggler">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="navbar-collapse hidden lg:flex lg:items-center lg:w-auto w-full" id="navbarMenu">
+                <ul class="flex flex-col lg:flex-row lg:ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link px-4 py-2 block" href="#inicio" data-i18n="nav.home">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-4 py-2 block" href="#sobre-mi" data-i18n="nav.about">Sobre Mí</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-4 py-2 block" href="#proyectos" data-i18n="nav.projects">Proyectos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-4 py-2 block" href="#contacto" data-i18n="nav.contact">Contacto</a>
+                    </li>
+                    <li class="nav-item py-2 block ml-2">
+                        <a href="./Alexis Martin Gomez CV.pdf" download
+                            class="btn-primary px-3 py-1 rounded-lg text-white inline-block"  data-i18n="nav.downloadCv">Descargar CV</a>
+                    </li>
+                    <li class="nav-item py-2 block ml-2">
+                        <button id="language-toggle"
+                            class="px-3 py-1 rounded-lg border border-gray-300 focus:outline-none">
+                            <span id="current-lang">ES</span>
+                        </button>
+                    </li>
+                    <li class="nav-item py-2 block ml-2">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero flex items-center">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col-reverse lg:flex-row items-center">
+                <div class="lg:w-1/2 text-center lg:text-left" data-aos="fade-right">
+                    <h1 class="text-4xl lg:text-5xl font-bold mb-4">
+                        <span class="block" data-i18n="hero.greeting">¡Hola! Soy</span>
+                        <span class="block text-blue-600" data-i18n="hero.name">Alexis Gómez</span>
+                    </h1>
+                    <p class="text-xl lg:text-2xl mb-8" data-i18n="hero.role">Salesforce Developer Jr.</p>
+                    <p class="text-lg mb-8 text-base" data-i18n="hero.tagline">Construyendo soluciones empresariales con
+                        la plataforma Salesforce</p>
+                    <div>
+                        <a href="#proyectos" class="btn-primary px-8 py-3 rounded-lg text-lg font-medium inline-block"
+                            data-i18n="hero.cta">Ver Proyectos</a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 mb-10 lg:mb-0" data-aos="fade-left">
+                    <img src="./personajeSalesforce.webp" alt="Salesforce Developer" class="max-w-xs md:max-w-sm lg:max-w-md h-auto mx-auto rounded-lg shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre-mi" class="section bg-gray-50 dark:bg-gray-800 section section-alt">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold" data-i18n="about.title">Sobre Mí</h2>
+            <div class="flex flex-col lg:flex-row">
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10" data-aos="fade-right">
+                    <p class="mb-5 text-lg text-base" data-i18n="about.description1">
+                        Soy un desarrollador Salesforce Junior apasionado por crear soluciones efectivas utilizando la
+                        plataforma Salesforce. Aunque estoy en las primeras etapas de mi carrera profesional, he
+                        trabajado en varios proyectos que me han permitido aplicar mis conocimientos y desarrollar mis
+                        habilidades técnicas.
+                    </p>
+                    <p class="mb-5 text-lg text-base" data-i18n="about.description2">
+                        Mi enfoque se centra en el desarrollo de componentes Lightning Web (LWC), la creación de clases
+                        Apex eficientes y la implementación de integraciones de API para conectar Salesforce con
+                        sistemas externos. Estoy constantemente aprendiendo y expandiendo mis conocimientos en el
+                        ecosistema Salesforce.
+                    </p>
+                </div>
+                <div class="lg:w-1/2" data-aos="fade-left">
+                    <h3 class="text-2xl font-semibold mb-4" data-i18n="about.skills">Mis habilidades técnicas</h3>
+                    <div class="mb-6">
+                        <span class="skill-badge">Apex</span>
+                        <span class="skill-badge">SOQL</span>
+                        <span class="skill-badge">Lightning Web Components (LWC)</span>
+                        <span class="skill-badge">Aura Components</span>
+                        <span class="skill-badge">JavaScript</span>
+                        <span class="skill-badge">HTML5 & CSS3</span>
+                        <span class="skill-badge">API Integrations</span>
+                        <span class="skill-badge">Data Migration</span>
+                        <span class="skill-badge">Visualforce</span>
+                        <span class="skill-badge">Process Builder</span>
+                        <span class="skill-badge">Flow Builder</span>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-semibold mb-4" data-i18n="about.certification">Certificaciones</h3>
+                        <div class="flex flex-wrap">
+                            <!-- <div class="bg-white dark:bg-gray-700 rounded-lg p-4 mr-3 mb-3 shadow-md">
+                                <i class="fab fa-salesforce text-blue-500 text-2xl mb-2"></i>
+                                <p class="font-medium" data-i18n="about.cert1">Salesforce Platform Developer I</p>
+                            </div> -->
+                            <div class="modificado-item rounded-lg p-4 mr-3 mb-3 shadow-md">
+                                <i class="fab fa-salesforce text-blue-500 text-2xl mb-2"></i>
+                                <p class="font-medium text-cert" data-i18n="about.cert2">Salesforce Administrator</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="proyectos" class="section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold" data-i18n="projects.title">Mis Proyectos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Project 1 -->
+                <div class="card project-card" data-aos="fade-up">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2" data-i18n="projects.project1.title">Sistema de Gestión de
+                            Casos</h3>
+                        <p class="mb-4" data-i18n="projects.project1.description">
+                            Desarrollé un sistema personalizado de gestión de casos con clasificación automática y
+                            enrutamiento basado en criterios predefinidos.
+                        </p>
+                        <div class="mb-4">
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">Apex</span>
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">LWC</span>
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">Process
+                                Builder</span>
+                        </div>
+                        <!-- <a href="javascript:void(0)"
+                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center">
+                            <i class="fab fa-github mr-2"></i>
+                            <span data-i18n="projects.viewCode">Ver Código</span>
+                        </a> -->
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2" data-i18n="projects.project2.title">Integración de API de
+                            Pagos</h3>
+                        <p class="mb-4" data-i18n="projects.project2.description">
+                            Implementé una integración con una plataforma de pagos externa para procesar transacciones
+                            directamente desde Salesforce.
+                        </p>
+                        <div class="mb-4">
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">Apex</span>
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">REST
+                                API</span>
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">Callouts</span>
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">LWC</span>
+                        </div>
+                        <!-- <a href="javascript:void(0)"
+                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center">
+                            <i class="fab fa-github mr-2"></i>
+                            <span data-i18n="projects.viewCode">Ver Código</span>
+                        </a> -->
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="card project-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2" data-i18n="projects.project3.title">Dashboard de Análisis de
+                            Ventas</h3>
+                        <p class="mb-4" data-i18n="projects.project3.description">
+                            Creé un dashboard interactivo para visualización de datos de ventas con filtros dinámicos y
+                            actualizaciones en tiempo real.
+                        </p>
+                        <div class="mb-4">
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">LWC</span>
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">JavaScript</span>
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">Apex</span>
+                            <span
+                                class="inline-block bg-gray-200 text-gray-800 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">SOQL</span>
+                        </div>
+                        <!-- <a href="javascript:void(0)"
+                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 flex items-center">
+                            <i class="fab fa-github mr-2"></i>
+                            <span data-i18n="projects.viewCode">Ver Código</span>
+                        </a> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="section bg-gray-50 dark:bg-gray-800 section section-alt">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold" data-i18n="contact.title">Contáctame</h2>
+            <div class="flex flex-col lg:flex-row">
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10" data-aos="fade-right">
+                    <p class="mb-5 text-lg text-base" data-i18n="contact.description">
+                        ¿Interesado en trabajar juntos o tienes alguna pregunta? Completa el formulario y me pondré en
+                        contacto contigo a la brevedad.
+                    </p>
+                    <div class="mb-8">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-blue-600 dark:text-blue-300"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium" data-i18n="contact.emailLabel">Email</h4>
+                                <p>alexisgomezgnb@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-4">
+                                <i class="fas fa-phone text-blue-600 dark:text-blue-300"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium" data-i18n="contact.phoneLabel">Teléfono</h4>
+                                <p>+542323676496</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div
+                                class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-blue-600 dark:text-blue-300"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium" data-i18n="contact.locationLabel">Ubicación</h4>
+                                <p data-i18n="contact.location">Buenos Aires - Argentina</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <a href="https://www.linkedin.com/in/alexismartingomez" target="_blank"
+                            class="w-10 h-10 rounded-full bg-gray-200 text-gray-800 flex items-center justify-center mr-3 hover:bg-blue-600 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="javascript:void(0)"
+                            class="w-10 h-10 rounded-full bg-gray-200 text-gray-800 flex items-center justify-center mr-3 hover:bg-blue-600 hover:text-white transition duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <!-- <a href="javascript:void(0)"
+                            class="w-10 h-10 rounded-full bg-gray-200 text-gray-800 flex items-center justify-center mr-3 hover:bg-blue-600 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a> -->
+                    </div>
+                </div>
+                <div style="border-radius: 0.7rem;" class="lg:w-1/2 modificado-item" data-aos="fade-left">
+                    <form id="contactForm" class="rounded-lg p-8 shadow-lg">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-800 text-sm font-medium mb-1"
+                                data-i18n="contact.form.name">Nombre</label>
+                            <input type="text" id="name" class="form-control w-full px-4 py-2 rounded-lg" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-800 text-sm font-medium mb-1"
+                                data-i18n="contact.form.email">Email</label>
+                            <input type="email" id="email" class="form-control w-full px-4 py-2 rounded-lg" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-800 text-sm font-medium mb-1"
+                                data-i18n="contact.form.message">Mensaje</label>
+                            <textarea id="message" rows="5" class="form-control w-full px-4 py-2 rounded-lg"
+                                required></textarea>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn-primary px-6 py-2 rounded-lg"
+                                data-i18n="contact.form.submit">Enviar Mensaje</button>
+                        </div>
+                        <div id="form-status" class="mt-4 text-center hidden"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer text-center py-8">
+        <div class="container mx-auto px-4">
+            <p data-i18n="footer.copyright">© 2025 Salesforce Developer Portfolio | Todos los derechos reservados</p>
+            <div class="mt-4">
+                <a href="https://www.linkedin.com/in/alexismartingomez" target="_blank" class="text-gray-500 hover:text-blue-600 mx-2">
+                    <i class="fab fa-linkedin text-xl"></i>
+                </a>
+                <a href="javascript:void(0)" class="text-gray-500 hover:text-blue-600 mx-2">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <!-- <a href="javascript:void(0)" class="text-gray-500 hover:text-blue-600 mx-2">
+                    <i class="fab fa-twitter text-xl"></i>
+                </a> -->
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script id="app-script">
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Language and theme toggles
+        const translations = {
+            "en": {
+                "nav": {
+                    "logo": "Salesforce.Dev Portfolio",
+                    "home": "Home",
+                    "about": "About Me",
+                    "projects": "Projects",
+                    "contact": "Contact",
+                    "downloadCv": "Download CV"
+                },
+                "hero": {
+                    "greeting": "Hi! I'm",
+                    "name": "Alexis Gómez",
+                    "role": "Salesforce Developer Jr.",
+                    "tagline": "Building business solutions with the Salesforce platform",
+                    "cta": "View Projects"
+                },
+                "about": {
+                    "title": "About Me",
+                    "description1": "I'm a Junior Salesforce Developer passionate about creating effective solutions using the Salesforce platform. Although I'm in the early stages of my professional career, I've worked on several projects that have allowed me to apply my knowledge and develop my technical skills.",
+                    "description2": "My focus is on developing Lightning Web Components (LWC), creating efficient Apex classes, and implementing API integrations to connect Salesforce with external systems. I'm constantly learning and expanding my knowledge within the Salesforce ecosystem.",
+                    "skills": "My Technical Skills",
+                    "certification": "Certifications",
+                    "cert1": "Salesforce Platform Developer I",
+                    "cert2": "Salesforce Administrator"
+                },
+                "projects": {
+                    "title": "My Projects",
+                    "viewCode": "View Code",
+                    "project1": {
+                        "title": "Case Management System",
+                        "description": "Developed a custom case management system with automatic classification and routing based on predefined criteria."
+                    },
+                    "project2": {
+                        "title": "Payment API Integration",
+                        "description": "Implemented an integration with an external payment platform to process transactions directly from Salesforce."
+                    },
+                    "project3": {
+                        "title": "Sales Analytics Dashboard",
+                        "description": "Created an interactive dashboard for sales data visualization with dynamic filters and real-time updates."
+                    }
+                },
+                "contact": {
+                    "title": "Contact Me",
+                    "description": "Interested in working together or have a question? Fill out the form and I'll get back to you shortly.",
+                    "emailLabel": "Email",
+                    "phoneLabel": "Phone",
+                    "locationLabel": "Location",
+                    "location": "Buenos Aires - Argentina",
+                    "form": {
+                        "name": "Name",
+                        "email": "Email",
+                        "message": "Message",
+                        "submit": "Send Message"
+                    }
+                },
+                "footer": {
+                    "copyright": "© 2025 Salesforce Developer Portfolio | All rights reserved"
+                }
+            },
+            "es": {
+                "nav": {
+                    "logo": "Salesforce.Dev Portfolio",
+                    "home": "Inicio",
+                    "about": "Sobre Mí",
+                    "projects": "Proyectos",
+                    "contact": "Contacto",
+                    "downloadCv": "Descargar CV"
+                },
+                "hero": {
+                    "greeting": "¡Hola! Soy",
+                    "name": "Alexis Gómez",
+                    "role": "Salesforce Developer Jr.",
+                    "tagline": "Construyendo soluciones empresariales con la plataforma Salesforce",
+                    "cta": "Ver Proyectos"
+                },
+                "about": {
+                    "title": "Sobre Mí",
+                    "description1": "Soy un desarrollador Salesforce Junior apasionado por crear soluciones efectivas utilizando la plataforma Salesforce. Aunque estoy en las primeras etapas de mi carrera profesional, he trabajado en varios proyectos que me han permitido aplicar mis conocimientos y desarrollar mis habilidades técnicas.",
+                    "description2": "Mi enfoque se centra en el desarrollo de componentes Lightning Web (LWC), la creación de clases Apex eficientes y la implementación de integraciones de API para conectar Salesforce con sistemas externos. Estoy constantemente aprendiendo y expandiendo mis conocimientos en el ecosistema Salesforce.",
+                    "skills": "Mis habilidades técnicas",
+                    "certification": "Certificaciones",
+                    "cert1": "Salesforce Platform Developer I",
+                    "cert2": "Salesforce Administrator"
+                },
+                "projects": {
+                    "title": "Mis Proyectos",
+                    "viewCode": "Ver Código",
+                    "project1": {
+                        "title": "Sistema de Gestión de Casos",
+                        "description": "Desarrollé un sistema personalizado de gestión de casos con clasificación automática y enrutamiento basado en criterios predefinidos."
+                    },
+                    "project2": {
+                        "title": "Integración de API de Pagos",
+                        "description": "Implementé una integración con una plataforma de pagos externa para procesar transacciones directamente desde Salesforce."
+                    },
+                    "project3": {
+                        "title": "Dashboard de Análisis de Ventas",
+                        "description": "Creé un dashboard interactivo para visualización de datos de ventas con filtros dinámicos y actualizaciones en tiempo real."
+                    }
+                },
+                "contact": {
+                    "title": "Contáctame",
+                    "description": "¿Interesado en trabajar juntos o tienes alguna pregunta? Completa el formulario y me pondré en contacto contigo a la brevedad.",
+                    "emailLabel": "Email",
+                    "phoneLabel": "Teléfono",
+                    "locationLabel": "Ubicación",
+                    "location": "Buenos Aires - Argentina",
+                    "form": {
+                        "name": "Nombre",
+                        "email": "Email",
+                        "message": "Mensaje",
+                        "submit": "Enviar Mensaje"
+                    }
+                },
+                "footer": {
+                    "copyright": "© 2025 Salesforce Developer Portfolio | Todos los derechos reservados"
+                }
+            }
+        };
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+        // Check for saved theme preference or use the browser preference
+        const currentTheme = localStorage.getItem("theme") ||
+            (prefersDarkScheme.matches ? "dark" : "light");
+
+        // Set initial theme
+        if (currentTheme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+            themeToggle.checked = true;
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+            themeToggle.checked = false;
+        }
+
+        // Theme toggle event listener
+        themeToggle.addEventListener('change', function () {
+            const theme = this.checked ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", theme);
+            localStorage.setItem("theme", theme);
+        });
+
+        // Language toggle functionality
+        const languageToggle = document.getElementById('language-toggle');
+        const currentLangSpan = document.getElementById('current-lang');
+
+        // Get saved language preference or default to Spanish
+        let currentLanguage = localStorage.getItem("language") || "es";
+        function updateLanguageButton() {
+    currentLangSpan.textContent = currentLanguage === "es" ? "EN" : "ES";
+}
+
+
+        // Apply translations on page load
+        applyTranslations();
+        updateLanguageButton();
+
+        // Language toggle event listener
+        languageToggle.addEventListener('click', function () {
+            currentLanguage = currentLanguage === "es" ? "en" : "es";
+            localStorage.setItem("language", currentLanguage);
+            applyTranslations();
+            updateLanguageButton();
+        });
+
+        function applyTranslations() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const keys = element.getAttribute('data-i18n').split('.');
+                let value = translations[currentLanguage];
+
+                // Navigate through the nested keys
+                for (const key of keys) {
+                    value = value[key];
+                }
+
+                if (value) {
+                    element.textContent = value;
+                }
+            });
+        }
+
+        // Mobile menu toggle
+        const navbarToggler = document.getElementById('navbarToggler');
+        const navbarMenu = document.getElementById('navbarMenu');
+
+        navbarToggler.addEventListener('click', function () {
+            navbarMenu.classList.toggle('hidden');
+        });
+
+        // Handle navigation links click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function () {
+                // Close mobile menu when a link is clicked
+                if (window.innerWidth < 1024) {
+                    navbarMenu.classList.add('hidden');
+                }
+
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+
+                // Add active class to clicked link
+                this.classList.add('active');
+            });
+        });
+
+        // Highlight active section on scroll
+        window.addEventListener('scroll', highlightActiveSection);
+
+        function highlightActiveSection() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let currentSectionId = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+
+                if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === currentSectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Contact form handling
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('form-status');
+
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Form validation
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (!name || !email || !message) {
+                showFormMessage('Por favor complete todos los campos requeridos.', 'error');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showFormMessage('Por favor ingrese un correo electrónico válido.', 'error');
+                return;
+            }
+
+            // Show loading state
+            showFormMessage('Enviando mensaje...', 'loading');
+
+            // Simulate API call
+            setTimeout(() => {
+                // Success message
+                showFormMessage('¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.',
+                    'success');
+                contactForm.reset();
+            }, 1500);
+        });
+
+        function showFormMessage(message, type) {
+            formStatus.textContent = message;
+            formStatus.classList.remove('hidden');
+
+            // Remove previous inline styles
+            formStatus.style.color = '';
+
+            // Set appropriate color based on message type using CSS variables
+            if (type === 'success') {
+                formStatus.style.color = getComputedStyle(document.documentElement).getPropertyValue('--success-color');
+            } else if (type === 'error') {
+                formStatus.style.color = getComputedStyle(document.documentElement).getPropertyValue('--error-color');
+            } else if (type === 'loading') {
+                formStatus.style.color = getComputedStyle(document.documentElement).getPropertyValue('--loading-color');
+            }
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+
+</html>
