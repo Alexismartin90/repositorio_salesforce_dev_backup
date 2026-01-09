@@ -9,9 +9,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
     <style id="app-style">
-        html, body {
-    overflow-x: hidden;
-}
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
         :root {
             --primary-color: #1589EE;
             --secondary-color: #0B5CAB;
@@ -219,11 +221,11 @@
             box-shadow: 0 0 0 0.2rem rgba(21, 137, 238, 0.25);
         }
 
-        .modificado-item{
+        .modificado-item {
             background-color: var(--bg-modificado);
         }
 
-        .text-cert{
+        .text-cert {
             color: var(--text-cert);
         }
 
@@ -238,8 +240,8 @@
         }
 
         .section-alt {
-    background-color: var(--bg-secondary);
-}
+            background-color: var(--bg-secondary);
+        }
     </style>
 </head>
 
@@ -247,7 +249,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg py-3 box-border">
         <div class="container">
-            <a class="navbar-brand font-bold text-2xl" href="javascript:void(0)" data-i18n="nav.logo">Salesforce.Dev Portfolio</a>
+            <a class="navbar-brand font-bold text-2xl" href="javascript:void(0)" data-i18n="nav.logo">Salesforce.Dev
+                Portfolio</a>
             <button class="navbar-toggler border-0 focus:outline-none lg:hidden" type="button" id="navbarToggler">
                 <i class="fas fa-bars text-xl"></i>
             </button>
@@ -267,7 +270,8 @@
                     </li>
                     <li class="nav-item py-2 block ml-2">
                         <a href="./Alexis Martin Gomez CV.pdf" download
-                            class="btn-primary px-3 py-1 rounded-lg text-white inline-block"  data-i18n="nav.downloadCv">Descargar CV</a>
+                            class="btn-primary px-3 py-1 rounded-lg text-white inline-block"
+                            data-i18n="nav.downloadCv">Descargar CV</a>
                     </li>
                     <li class="nav-item py-2 block ml-2">
                         <button id="language-toggle"
@@ -304,7 +308,8 @@
                     </div>
                 </div>
                 <div class="lg:w-1/2 mb-10 lg:mb-0" data-aos="fade-left">
-                    <img src="./personajeSalesforce.webp" alt="Salesforce Developer" class="max-w-xs md:max-w-sm lg:max-w-md h-auto mx-auto rounded-lg shadow-2xl">
+                    <img src="./personajeSalesforce.webp" alt="Salesforce Developer"
+                        class="max-w-xs md:max-w-sm lg:max-w-md h-auto mx-auto rounded-lg shadow-2xl">
                 </div>
             </div>
         </div>
@@ -511,24 +516,33 @@
                         </a> -->
                     </div>
                 </div>
+
+                <!-- formulario mioooo -->
+
                 <div style="border-radius: 0.7rem;" class="lg:w-1/2 modificado-item" data-aos="fade-left">
-                    <form id="contactForm" class="rounded-lg p-8 shadow-lg">
+                    <form id="contactForm" action="https://formspree.io/f/xdaobrnl" method="POST" autocomplete="off"
+                        class="rounded-lg p-8 shadow-lg">
                         <div class="mb-4">
                             <label for="name" class="block text-gray-800 text-sm font-medium mb-1"
                                 data-i18n="contact.form.name">Nombre</label>
-                            <input type="text" id="name" class="form-control w-full px-4 py-2 rounded-lg" required>
+                            <input type="text" id="name" name="name" class="form-control w-full px-4 py-2 rounded-lg"
+                                required autocomplete="off">
                         </div>
                         <div class="mb-4">
                             <label for="email" class="block text-gray-800 text-sm font-medium mb-1"
                                 data-i18n="contact.form.email">Email</label>
-                            <input type="email" id="email" class="form-control w-full px-4 py-2 rounded-lg" required>
+                            <input type="email" id="email" name="email" class="form-control w-full px-4 py-2 rounded-lg"
+                                required autocomplete="off">
                         </div>
                         <div class="mb-4">
                             <label for="message" class="block text-gray-800 text-sm font-medium mb-1"
                                 data-i18n="contact.form.message">Mensaje</label>
-                            <textarea id="message" rows="5" class="form-control w-full px-4 py-2 rounded-lg"
-                                required></textarea>
+                            <textarea id="message" name="message" rows="5"
+                                class="form-control w-full px-4 py-2 rounded-lg" required autocomplete="off"></textarea>
                         </div>
+                        <input type="hidden" name="_next"
+                            value="https://alexismartin90.github.io/repositorio_salesforce_dev_backup/?sent=1#contacto" />
+
                         <div class="text-right">
                             <button type="submit" class="btn-primary px-6 py-2 rounded-lg"
                                 data-i18n="contact.form.submit">Enviar Mensaje</button>
@@ -545,7 +559,8 @@
         <div class="container mx-auto px-4">
             <p data-i18n="footer.copyright">© 2025 Salesforce Developer Portfolio | Todos los derechos reservados</p>
             <div class="mt-4">
-                <a href="https://www.linkedin.com/in/alexismartingomez" target="_blank" class="text-gray-500 hover:text-blue-600 mx-2">
+                <a href="https://www.linkedin.com/in/alexismartingomez" target="_blank"
+                    class="text-gray-500 hover:text-blue-600 mx-2">
                     <i class="fab fa-linkedin text-xl"></i>
                 </a>
                 <a href="javascript:void(0)" class="text-gray-500 hover:text-blue-600 mx-2">
@@ -718,9 +733,10 @@
 
         // Get saved language preference or default to Spanish
         let currentLanguage = localStorage.getItem("language") || "es";
+
         function updateLanguageButton() {
-    currentLangSpan.textContent = currentLanguage === "es" ? "EN" : "ES";
-}
+            currentLangSpan.textContent = currentLanguage === "es" ? "EN" : "ES";
+        }
 
 
         // Apply translations on page load
@@ -804,61 +820,32 @@
             });
         }
 
-        // Contact form handling
-        const contactForm = document.getElementById('contactForm');
-        const formStatus = document.getElementById('form-status');
+        // ✅ CLEAR CONTACT FORM AFTER SUCCESS REDIRECT
+        window.addEventListener("load", () => {
+            const form = document.getElementById("contactForm");
+            if (!form) return;
 
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+            const url = new URL(window.location.href);
 
-            // Form validation
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+            if (url.searchParams.get("sent") === "1") {
+                // 🔥 limpia el formulario
+                form.reset();
 
-            if (!name || !email || !message) {
-                showFormMessage('Por favor complete todos los campos requeridos.', 'error');
-                return;
+                // mensaje de éxito
+                const status = document.getElementById("form-status");
+                if (status) {
+                    status.classList.remove("hidden");
+                    status.textContent =
+                        currentLanguage === "en" ?
+                        "Thanks! Message sent successfully." :
+                        "¡Gracias! Mensaje enviado correctamente.";
+                }
+
+                // 🔥 limpia la URL (borra ?sent=1 sin recargar)
+                url.searchParams.delete("sent");
+                window.history.replaceState({}, "", url.pathname + url.hash);
             }
-
-            if (!isValidEmail(email)) {
-                showFormMessage('Por favor ingrese un correo electrónico válido.', 'error');
-                return;
-            }
-
-            // Show loading state
-            showFormMessage('Enviando mensaje...', 'loading');
-
-            // Simulate API call
-            setTimeout(() => {
-                // Success message
-                showFormMessage('¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.',
-                    'success');
-                contactForm.reset();
-            }, 1500);
         });
-
-        function showFormMessage(message, type) {
-            formStatus.textContent = message;
-            formStatus.classList.remove('hidden');
-
-            // Remove previous inline styles
-            formStatus.style.color = '';
-
-            // Set appropriate color based on message type using CSS variables
-            if (type === 'success') {
-                formStatus.style.color = getComputedStyle(document.documentElement).getPropertyValue('--success-color');
-            } else if (type === 'error') {
-                formStatus.style.color = getComputedStyle(document.documentElement).getPropertyValue('--error-color');
-            } else if (type === 'loading') {
-                formStatus.style.color = getComputedStyle(document.documentElement).getPropertyValue('--loading-color');
-            }
-        }
-
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
     </script>
 </body>
 
